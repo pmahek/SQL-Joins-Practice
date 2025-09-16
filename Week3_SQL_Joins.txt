@@ -1,0 +1,29 @@
+--List all customers and their related orders
+SELECT Customers.CustomerName, Orders.OrderID FROM Customers
+INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+
+--Find all customers, including those who never placed an order.
+SELECT Customers.CustomerName, Orders.OrderID FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+
+--Show customers with no orders at all.
+SELECT Customers.CustomerName, Orders.OrderID FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+WHERE OrderID IS NULL
+
+
+--Find the number of orders placed by each customer.
+SELECT Customers.CustomerName, COUNT(Orders.OrderID) AS TotalOrders
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+GROUP BY Customers.CustomerName;
+
+--List the top 5 customers by total number of orders.
+SELECT TOP 5 Customers.[CustomerName], COUNT(Orders.[OrderID]) AS TotalOrders
+FROM Customers
+LEFT JOIN Orders ON Customers.[CustomerID] = Orders.[CustomerID]
+GROUP BY Customers.[CustomerName], Customers.[CustomerID]
+ORDER BY COUNT(Orders.[OrderID]) DESC;
+
+
+
